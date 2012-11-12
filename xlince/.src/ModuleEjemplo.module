@@ -1,0 +1,87 @@
+' Gambas module file
+
+'********************************
+'CREANDO UNITARIOS
+'********************************
+Public Sub creaUnitarios() As ClassUnit[]
+  
+  Dim unitario As New ClassUnit[]
+  Dim unitariotemp As New ClassUnit
+  'añado peon 
+  unitariotemp.clave = "O001"
+  unitariotemp.DescripcionCorta = "Peon albañil"
+  unitariotemp.UdMedicion = 9
+  unitariotemp.importe = 14.3
+  
+  unitario.Add(unitariotemp)
+  
+  unitariotemp = New ClassUnit
+  'añado oficial
+  unitariotemp.clave = "O002"
+  unitariotemp.DescripcionCorta = "Oficial albañil"
+  unitariotemp.UdMedicion = 9
+  unitariotemp.importe = 16.3
+  
+  unitario.Add(unitariotemp)
+  
+  'añado Maquinaria
+  unitariotemp.clave = "M002"
+  unitariotemp.DescripcionCorta = "Retro Excavadora"
+  unitariotemp.UdMedicion = 9
+  unitariotemp.importe = 25
+  
+  unitario.Add(unitariotemp)
+  
+  Return unitario
+  
+End
+
+Public Sub creaCap() As ClassUnit
+  
+  Dim unitariotemp As New ClassUnit
+  Dim medicion As ClassMed
+  'añado Capitulo Movimiento de tierras
+  unitariotemp.clave = "01"
+  unitariotemp.DescripcionCorta = "Movimiento de tierras"
+  
+  unitariotemp.importeSinDescomponer = 2
+  unitariotemp.padre = "#inicio#"
+  
+  medicion = New ClassMed
+  medicion.NumeroVeces = 1
+  unitariotemp.DescompuestoMediciones.Add(medicion)
+  
+  medicion = New ClassMed
+  medicion.NumeroVeces = 2.5
+  unitariotemp.DescompuestoMediciones.Add(medicion)
+  Return unitariotemp
+  
+End
+
+Public Sub creaexcavacion() As ClassUnit
+  
+  Dim unitariotemp As New ClassUnit
+  'añado excavacion en zanja
+  unitariotemp.clave = "01.01"
+  unitariotemp.DescripcionCorta = "Excavacion en zanjas"
+  unitariotemp.UdMedicion = 3
+  unitariotemp.importeSinDescomponer = 20
+  unitariotemp.padre = "01"
+  
+  Return unitariotemp
+  
+End
+
+Public Sub creacata() As ClassUnit
+  
+  Dim unitariotemp As New ClassUnit
+  'añado excavacion en zanja
+  unitariotemp.clave = "01.02"
+  unitariotemp.DescripcionCorta = "Cata en obra"
+  unitariotemp.UdMedicion = 5
+  unitariotemp.importeSinDescomponer = 1350
+  unitariotemp.padre = "01"
+  
+  Return unitariotemp
+  
+End

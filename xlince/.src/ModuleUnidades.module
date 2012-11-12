@@ -1,0 +1,27 @@
+' Gambas module file
+
+Public unidad As New ClassUD
+
+Public Sub creaUnidades() As ClassUD
+  ' 1_ml, 2_m2, 3_m3, 4_tn, 5_ud, 6_pa, 7_kg, 8_dm3, 9_h, 10_dia, 11_mes
+  
+  Dim ud As New ClassUD
+  
+  ud.add("N/A") '0
+  ud.add("ml") '1
+  ud.add("m2") '2
+  ud.add("m3") '3
+  ud.add("Tn") '4
+  ud.add("Ud") '5
+  ud.add("PA") '6
+  ud.add("Kg") '7
+  ud.add("dm3") '8
+  ud.add("Hora") '9
+  ud.add("dia") '10
+  ud.add("mes") '11
+  
+  unidad = ud
+  
+  Return ud
+  
+End

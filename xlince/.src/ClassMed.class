@@ -1,0 +1,118 @@
+' Gambas class file
+
+Property comentario As String 'comentario de la medicion...
+Property NumeroVeces As Single 'numero de veces que ser repite la medicion
+Property Largo As Single 'largo
+Property ancho As Single 'ancho
+Property alto As Single 'alto
+Property formula As Byte 'tipo de formula: 0 es NumeroVeces*largo*ancho*alto, 
+Property resultado As Single 'resultado de la operacion, aplicando la formula...
+
+'metodos...
+'calcular
+
+Public Function calcular() As Single
+  
+  'segun la formula, opero de diversa  manera
+  Select hformula
+    Case 0 'operacion mas simple...
+      If hlargo = 0 Then hlargo = 1
+      If hancho = 0 Then hancho = 1
+      If halto = 0 Then halto = 1
+      
+      hresultado = hNumeroVeces * hLargo * hancho * halto
+      'diversos tipos de caso: perfiles, etc...superficies de triangulos, etc...    
+      
+  End Select
+  
+  Return hresultado
+
+End
+
+Private hcomentario As String
+Private hNumeroVeces As Single 'numero de veces que ser repite la medicion
+Private hLargo As Single 'largo
+Private hancho As Single 'ancho
+Private halto As Single 'alto
+Private hformula As Byte 'tipo de formula: 0 es NumeroVeces*largo*ancho*alto, 
+Private hresultado As Single 'resultado de la operacion, aplicando la formula...
+
+Private Function NumeroVeces_Read() As Single
+  
+  Return hNumeroVeces  
+  
+End
+
+Private Sub NumeroVeces_Write(Value As Single)
+  
+  hNumeroVeces = value  
+  
+End
+
+Private Function Largo_Read() As Single
+  
+  Return hLargo
+  
+End
+
+Private Sub Largo_Write(Value As Single)
+  
+  hlargo = value
+  
+End
+
+Private Function ancho_Read() As Single
+  
+  Return hancho
+  
+End
+
+Private Sub ancho_Write(Value As Single)
+  
+  hancho = value
+  
+End
+
+Private Function alto_Read() As Single
+  
+  Return halto
+  
+End
+
+Private Sub alto_Write(Value As Single)
+  
+  halto = value
+  
+End
+
+Private Function formula_Read() As Byte
+  
+  Return hformula
+  
+End
+
+Private Sub formula_Write(Value As Byte)
+  
+  hformula = value
+  
+End
+
+Private Function comentario_Read() As String
+  
+  Return hcomentario
+  
+End
+
+Private Sub comentario_Write(Value As String)
+  
+  hcomentario = value
+  
+End
+
+Private Function resultado_Read() As Single
+  
+End
+
+Private Sub resultado_Write(Value As Single)
+  
+End

@@ -1,0 +1,52 @@
+' Gambas class file
+
+Property unidad As String[]
+Private hunidad As New String[]
+
+Private Function unidad_Read() As String[]
+  
+  Return hunidad
+  
+End
+
+Private Sub unidad_Write(Value As String[])
+  
+  hunidad = Value
+  
+End
+
+Public Function id(id As Integer) As String
+  
+  Return hunidad[id]
+  
+End
+
+Public Sub add(valor As String)
+  
+  hunidad.Add(valor)
+  
+End
+
+Public Sub modifica(antiguo As String, nuevo As String)
+
+  Dim a As Integer 'indice
+  a = hunidad.Find(antiguo)
+  hunidad[a] = nuevo
+  
+End
+
+Public Sub borrar(nombre As String)
+
+  Dim a As Integer 'indice
+  a = hunidad.Find(nombre)
+  hunidad.Delete(a)
+  
+End
+
+Public Function escribe(id As Integer) As String
+  
+  Return hunidad[id]
+  
+End
+
+

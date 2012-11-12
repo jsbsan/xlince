@@ -1,0 +1,221 @@
+' Gambas class file
+
+'propiedad de una unidad
+'nombre descriptivo corto
+'nombre descriptivo largo
+'unidad de medida de unit
+'precio de unit
+'descompuesto de medicion: array de clase medicion
+'descompuesto de precio: array de precios
+'array de rendimiento de los descompuestos de precio
+'funcion: calcula precio 
+
+Property DescripcionCorta As String ''descripcion corta del precio
+Property DescripcionLarga As String ''descripcion larga del precio
+Property DescompuestoMediciones As ClassMed[] ''array de mediciones que componen la unidad
+Property DescompuestoUnit As ClassUnit[] ''array de partidas que componen la unidad (HIJOS)
+Property Rendimientos As Single[] ''rendimientos de las partidas que componen la unidad
+Property UdMedicion As Byte '' codigo que identifica la unidad de medicion: 1_ml, 2_m2, 3_m3, 4_tn, 5_ud, 6_pa, 7_kg, 8_dm3, 9_h, 10_dia, 11_mes
+Property importe As Single ''importe (precios x rendimiento)
+Property importeSinDescomponer As Single ''importe si no aplico precios x rendimiento, o cuando classUnit no tiene medicion
+Property clave As String ''clave del precio A auxiliar, M maquinaria, 0 mano de obra, VP materiales
+Property padre As String ''codigo del precio del que depende (Padre)
+
+Public Function calcularPrecioUnitario() As Single
+  
+  Dim a As Byte = 0 'para el for--next
+  Dim valoracion As Single = 0
+  
+  If IsNull(hDescompuestoUnit) Or If hDescompuestoUnit.count = 0 Then 
+    'recio sin descompuesto, devuelvo el precio almacenado como SinDescomponer
+    Return himporteSinDescomponer
+  Else
+    'hago sumatorio de rendimientos x precios
+    For a = 0 To hDescompuestoUnit.Max
+      valoracion += hRendimientos[a] * hDescompuestoUnit[a].calcularPrecio()    
+    Next
+    Return valoracion
+  Endif
+  
+End
+
+Public Function calcularMedicion() As Single
+  
+  Dim a As Single 'puede haber mas de 255 lineas de mediciones (aunque no es normal)
+  Dim valoracion As Single = 0
+  
+  If IsNull(hDescompuestoMediciones) = False And If hDescompuestoMediciones.count <> 0 Then 
+    For a = 0 To hDescompuestoMediciones.Max
+      valoracion += hDescompuestoMediciones[a].calcular()
+    Next
+  Endif
+  
+  Return valoracion
+  
+End
+
+Public Function calcularTotal() As Single
+  
+  Return calcularMedicion() * calcularPrecioUnitario()
+  
+End
+
+Private hDescripcionCorta As String 'descripcion corta del precio
+Private hDescripcionLarga As String 'descripcion larga del precio
+Private hDescompuestoMediciones As New ClassMed[] 'array de mediciones que componen la unidad
+Private hDescompuestoUnit As ClassUnit[] 'array de partidas que componen la unidad
+Private hRendimientos As Single[] 'rendimientos de las partidas que componen la unidad
+Private hUdMedicion As Byte ' codigo que identifica la unidad de medicion: 1_ml, 2_m2, 3_m3, 4_tn, 5_ud, 6_pa, 7_kg, 8_dm3
+Private himporte As Single 'importe (precios x rendimiento)
+Private himporteSinDescomponer As Single 'importe si no aplico precios x rendimiento, o cuando classUnit no tiene medicion
+Private hclave As String
+Private hpadre As String
+
+Private Function DescripcionCorta_Read() As String
+  
+  Return hDescripcionCorta
+  
+End
+
+Private Sub DescripcionCorta_Write(Value As String)
+  
+  hDescripcionCorta = value
+  
+End
+
+Private Function DescripcionLarga_Read() As String
+  
+  Return hDescripcionLarga
+  
+End
+
+Private Sub DescripcionLarga_Write(Value As String)
+  
+  hDescripcionLarga = value  
+  
+End
+
+Private Function DescompuestoMediciones_Read() As ClassMed[]
+  
+  Return hDescompuestoMediciones
+  
+End
+
+Private Sub DescompuestoMediciones_Write(Value As ClassMed[])
+  
+  hDescompuestoMediciones = value
+  
+End
+
+Private Function DescompuestoUnit_Read() As ClassUnit[]
+  
+  Return hDescompuestoUnit
+  
+End
+
+Private Sub DescompuestoUnit_Write(Value As ClassUnit[])
+  
+  hDescompuestoUnit = value
+  
+End
+
+Private Function Rendimientos_Read() As Single[]
+  
+  Return hRendimientos
+  
+End
+
+Private Sub Rendimientos_Write(Value As Single[])
+  
+  hRendimientos = value
+  
+End
+
+Private Function UdMedicion_Read() As Byte
+  
+  Return hUdMedicion
+  
+End
+
+Private Sub UdMedicion_Write(Value As Byte)
+  
+  hUdMedicion = value
+  
+End
+
+Private Function importe_Read() As Single
+  
+  Return himporte
+  
+End
+
+Private Sub importe_Write(Value As Single)
+  
+  himporte = value
+  
+End
+
+Private Function importeSinDescomponer_Read() As Single
+  
+  Return himporteSinDescomponer
+  
+End
+
+Private Sub importeSinDescomponer_Write(Value As Single)
+  
+  himporteSinDescomponer = Value
+  
+End
+
+Private Function clave_Read() As String
+  
+  Return hclave  
+  
+End
+
+Private Sub clave_Write(Value As String)
+  
+  hclave = value
+  
+End
+
+Private Function padre_Read() As String
+  
+  Return hpadre
+  
+End
+
+Private Sub padre_Write(Value As String)
+  
+  hpadre = value
+  
+End
+
+Public Function escribe(unidades As ClassUnit[], Optional tipo As String) As String ''tipo: Presupuesto, Mediciones, Descompuesto, 
+  'escribe.. codigo ud nombrecorto medicion preciototal
+  
+  Dim a As Integer
+  Dim cadena As String
+  'codigo, nombre corto, medicion, precio
+  cadena = hclave & " " & ModuleUnidades.unidad.escribe(hUdMedicion) & " " & hDescripcionCorta 
+  cadena &= "\n" & " Medicion: " & Str$(Me.calcularMedicion()) & " Precio: " & Str$(Me.calcularPrecioUnitario()) & " Total: " & Str$(Me.calcularTotal()) & "\n"
+  
+  'describe medicion
+  cadena &= "Medicion:\n"
+  cadena &= "Comentario.... N... alto...ancho...largo\n"
+  For a = 0 To hDescompuestoMediciones.count - 1
+    cadena &= hDescompuestoMediciones[a].comentario & " " & hDescompuestoMediciones[a].NumeroVeces & " " & hDescompuestoMediciones[a].alto & " " & hDescompuestoMediciones[a].ancho & " " & hDescompuestoMediciones[a].largo & "\n"
+  Next
+  
+  'por cada unidad que dependa de mi clave, describela...
+  
+  For a = 0 To unidades.Max
+    If unidades[a].padre = hclave Then 
+      'escribo todos los precios que tengan la unidad padre como #inicio#
+      cadena &= "  " & unidades[a].escribe(unidades) & "\n"
+    Endif
+  Next
+  
+  Return cadena
+  
+End

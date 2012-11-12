@@ -8,8 +8,3 @@ Public Sub Form_Open()
 
 End
 
-Public Sub Label2_MouseDown()
-
-  Print "hola"
-
-End

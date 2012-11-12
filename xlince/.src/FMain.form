@@ -2,12 +2,7 @@
 
 { Form Form
   MoveScaled(0,0,50,50)
-  { Label1 Label
-    MoveScaled(10,12,16,5)
-    Text = ("Label1")
-  }
-  { Label2 Label
-    MoveScaled(19,2,27,6)
-    Text = ("Label2")
+  { TableView1 TableView
+    MoveScaled(4,2,41,43)
   }
 }
