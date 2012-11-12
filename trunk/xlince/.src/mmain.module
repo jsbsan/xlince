@@ -1,0 +1,29 @@
+' Gambas module file
+
+Public presupuesto As ClassPresupuesto
+Public ud As New ClassUD
+Public unitario As New Classunit[]
+
+Public Sub main()
+  'metodo de inicio
+  
+  'creo el sistema de unidades de medida
+  ud = ModuleUnidades.creaUnidades()  
+  'creamos un precio unitario
+  unitario = ModuleEjemplo.creaUnitarios()
+  
+  'creo unas partidas
+  '01 movimiento de tierras
+  unitario.Add(ModuleEjemplo.creaCap())
+  '01.01 excavacion en zanja
+  unitario.Add(ModuleEjemplo.creaexcavacion())
+  '01.02cata de proteccion
+  unitario.Add(ModuleEjemplo.creacata())
+  
+  presupuesto = New ClassPresupuesto
+  
+  presupuesto.ArrayUnit = unitario
+  
+  Print presupuesto.escribe()
+  
+End

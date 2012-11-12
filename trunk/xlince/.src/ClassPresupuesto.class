@@ -1,0 +1,34 @@
+' Gambas class file
+
+Property ArrayUnit As ClassUnit[]
+Private harrayUnit As New ClassUnit[]
+
+Private Function ArrayUnit_Read() As ClassUnit[]
+  
+  Return harrayUnit
+  
+End
+
+Private Sub ArrayUnit_Write(Value As ClassUnit[])
+  
+  harrayUnit = value
+  
+End
+
+Public Function escribe() As String
+  
+  Dim a As Integer
+  Dim cadena As String
+  'devuelve el presupuesto.....
+  'busco la unidad cuyo padre sea "#inicio#", a partir de hay imprimo descompuesto
+  '
+  For a = 0 To hArrayUnit.Max
+    If hArrayUnit[a].padre = "#inicio#" Then 
+      'escribo todos los precios que tengan la unidad padre como #inicio#
+      cadena &= hArrayUnit[a].escribe(harrayUnit)
+    Endif
+  Next
+  
+  Return cadena
+  
+End
